@@ -4,8 +4,10 @@ import { useAppSelector } from "@store/hooks";
 import { ProductsCleanup, ThunkGetProductsByCatPrefix } from "@store/Products/ProductsSlice";
 import { useParams } from "react-router-dom";
 
-import { Container, Row, Col } from "react-bootstrap";
+import { Container} from "react-bootstrap";
 import { Product } from "@components/eCommerce";
+import Loading from "@components/feedback/Loading/Loading";
+import GridList from "@components/common/GridList/GridList";
 
 const Products = () => {
     const params = useParams();
@@ -20,18 +22,13 @@ const Products = () => {
         };
     }, [dispatch, params]);
 
-    const productsList = records.map((record)=>{
-            return(
-            <Col xs={6} key={record.id} md={3} className="d-flex justify-content-center mb-5 mt-2">
-              <Product {...record}/>
-            </Col>
-            )
-    })
   return (
     <Container>
-      <Row>
-        {productsList}
-      </Row>
+      <Loading status={loading} error={error}>
+        <GridList records={records} renderRecords ={(record)=> <Product {...record} /> } />
+
+      </Loading>
+
     </Container>
   );
 };
