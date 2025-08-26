@@ -71,3 +71,7 @@
 .product button:hover {
   transform: translateY(-2px);
 }
+.maximumNotice {
+  font-size: 12px;
+  margin-bottom: 7px;
+}

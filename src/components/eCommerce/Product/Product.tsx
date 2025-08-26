@@ -1,15 +1,39 @@
-import { Button } from "react-bootstrap";
+import { Button,Spinner } from "react-bootstrap";
 import styles from "./styles.module.css";
 import { TProduct } from "src/Types/product";
 
 
 import { useAppDispatch } from "@store/hooks";
 import { addToCart } from "@store/Cart/CartSlice";
-const { product, productImg } = styles;
+import { memo, useEffect, useState } from "react";
+const { product, productImg,maximumNotice } = styles;
 
 
-const Product = ({id,title,price,img}:TProduct) => {
-const dispatch = useAppDispatch()
+const Product = memo(({id,title,price,img,max,quantity}:TProduct) => {
+const [isBtnDisabled, setIsBtnDisabled]=useState(false);
+const dispatch = useAppDispatch();
+
+  const currentRemainingQuantity = max - (quantity ?? 0);
+  const quantityReachedToMax = currentRemainingQuantity <= 0 ? true : false;
+
+useEffect(()=>{
+      if (!isBtnDisabled) {
+      return;
+    }
+
+  const debounce = setTimeout(()=>{
+    setIsBtnDisabled(false);
+  },300)
+
+
+  return ()=>  clearTimeout(debounce)
+},[isBtnDisabled])
+
+const addToCartHandler =()=>{
+
+  dispatch(addToCart(id));
+  setIsBtnDisabled(true);
+}
 
   return (
     <div className={product}>
@@ -21,12 +45,26 @@ const dispatch = useAppDispatch()
       </div>
       <h2>{title}</h2>
       <h3>{price} EGP</h3>
-
-      <Button  variant="info" style={{ color: "white" }} onClick={()=>dispatch(addToCart(id)) }>
-        Add to cart
+      <p className={maximumNotice}>
+        {quantityReachedToMax
+          ? "You reach to the limit"
+          : `You can add ${currentRemainingQuantity} item(s)`}
+      </p>
+      <Button  
+      variant="info" style={{ color: "white" }} 
+      onClick={addToCartHandler}
+      disabled ={isBtnDisabled || quantityReachedToMax}
+      >
+        {isBtnDisabled ? (
+          <>
+            <Spinner animation="border" size="sm" /> Loading...
+          </>
+        ) : (
+          "Add to cart"
+        )}
       </Button>
     </div>
   );
-};
+});
 
 export default Product;

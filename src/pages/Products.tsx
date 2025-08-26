@@ -13,10 +13,15 @@ const Products = () => {
     const params = useParams();
     const dispatch = useAppDispatch();
     const {loading, error, records }=useAppSelector((state)=>state.ProductsSlice);
+      const cartItems = useAppSelector((state) => state.cartSlice.items);
+      const productsFullInfo = records.map((el) => ({
+        ...el,
+        quantity: cartItems[el.id] || 0,
+      }));
 
     useEffect(() => {
         dispatch(ThunkGetProductsByCatPrefix(params.prefix as string));
-
+        
         return () => {
         dispatch(ProductsCleanup());
         };
@@ -25,7 +30,7 @@ const Products = () => {
   return (
     <Container>
       <Loading status={loading} error={error}>
-        <GridList records={records} renderRecords ={(record)=> <Product {...record} /> } />
+        <GridList records={productsFullInfo} renderRecords ={(record)=> <Product {...record} /> } />
 
       </Loading>
 
