@@ -4,6 +4,10 @@ import AppRouter from "@routes/AppRouter";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/global.css";
 
+
+//axios
+import "./services/axios-global.js"
+
 //  redux
 import { Provider } from 'react-redux';
 import  {store,persistor}  from '@store/index';

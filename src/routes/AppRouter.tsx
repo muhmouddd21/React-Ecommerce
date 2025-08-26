@@ -8,6 +8,7 @@ import { MainLayout } from "@layouts/index";
 import Error from '@pages/Error';
 import Login from '@pages/Login';
 import Register from '@pages/Register';
+import Cart from '@pages/Cart';
 
 
 const router = createBrowserRouter([
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
                 {
                     path: "about-us",
                     element: <AboutUs />,
+                },
+                {
+                    path: "cart",
+                    element: <Cart/>,
                 },
                 {
                     path:'login',
