@@ -33,6 +33,10 @@ const cartSlice =createSlice({
             }else{
                 state.items[id] =1;
             }
+        },
+        cartChangeQuantity:(state,action)=>{
+        state.items[action.payload.id] = action.payload.quantity;
+
         }
     },
     extraReducers:(builder) =>{
@@ -57,4 +61,4 @@ const cartSlice =createSlice({
 
 
 export default cartSlice.reducer;
-export const { addToCart} = cartSlice.actions;
+export const { addToCart ,cartChangeQuantity} = cartSlice.actions;

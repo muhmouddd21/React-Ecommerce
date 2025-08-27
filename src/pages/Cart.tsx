@@ -1,6 +1,7 @@
 import { Heading } from "@components/common";
 import CartItemList from "@components/common/CartItemList/CartItemList";
 import Loading from "@components/feedback/Loading/Loading";
+import { cartChangeQuantity } from "@store/Cart/CartSlice";
 import ThunkGetFillInfoOfCartItems from "@store/Cart/Thunk/ThunkGetFillInfoOfCartItems";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { useEffect } from "react";
@@ -19,14 +20,19 @@ export default function Cart() {
         ...el,
         quantity:items[el.id]
     }));
-    
+    const cartChangeQuantityHandler =(id:number,quantity:number)=>{
+        dispatch(cartChangeQuantity({id,quantity}))
+    }
 
 
   return (
     <>
         <Heading>Your Cart</Heading>
         <Loading status={loading} error={error} >
-            <CartItemList products={products}/>
+            <CartItemList 
+            products={products}
+            cartChangeQuantityHandler ={cartChangeQuantityHandler}
+            />
         </Loading>
     </>
   )

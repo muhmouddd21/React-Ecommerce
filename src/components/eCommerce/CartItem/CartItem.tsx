@@ -3,13 +3,27 @@ import styles from './styles.module.css'
 import { TProduct } from "src/Types/product";
 const {cartItem,product,productImg,productInfo,cartItemSelection} = styles;
 
+type cartItemProps = TProduct & {
+  cartChangeQuantityHandler: (id: number, quantity: number) => void;
+};
 
-export default function CartItem({img,title,price,quantity,id,max}:TProduct) {
+export default function CartItem({img,title,price,quantity,id,max,cartChangeQuantityHandler}:cartItemProps) {
 
-    // const changeQuantity = (event: React.ChangeEvent<HTMLSelectElement>)=>{
-    //     const quantity = event.target.value;
+    const changeQuantity = (event: React.ChangeEvent<HTMLSelectElement>)=>{
+        const quantity = +event.target.value;
+        cartChangeQuantityHandler(id,quantity);
+    }
 
-    // }
+    const renderOptions = Array(max)
+      .fill(0)
+      .map((_, idx) => {
+        const quantity = ++idx;
+        return (
+          <option value={quantity} key={quantity}>
+            {quantity}
+          </option>
+        );
+      });
 
   return (
       <div className={cartItem}>
@@ -33,9 +47,9 @@ export default function CartItem({img,title,price,quantity,id,max}:TProduct) {
 
         <div className={cartItemSelection}>
           <span className="d-block mb-1">Quantity</span>
-          {/* <Form.Select value={quantity} onChange={changeQuantity}>
+          <Form.Select value={quantity} onChange={changeQuantity}>
             {renderOptions}
-          </Form.Select> */}
+          </Form.Select>
         </div>
       </div>
     );
