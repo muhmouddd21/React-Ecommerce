@@ -1,5 +1,5 @@
 import { Heading } from "@components/common";
-import { CartItem } from "@components/eCommerce";
+import CartItemList from "@components/common/CartItemList/CartItemList";
 import Loading from "@components/feedback/Loading/Loading";
 import ThunkGetFillInfoOfCartItems from "@store/Cart/Thunk/ThunkGetFillInfoOfCartItems";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
@@ -20,26 +20,13 @@ export default function Cart() {
         quantity:items[el.id]
     }));
     
-    const RenderedProducts = products.map((product) => {
-    return (
-        <CartItem 
-        key={product.id}   // always add a key in lists!
-        id={product.id} 
-        img={product.img} 
-        quantity={product.quantity} 
-        title={product.title}
-        price={product.price}
-        max={product.max}
-        />
-    )
-    });
 
 
   return (
     <>
         <Heading>Your Cart</Heading>
-        <Loading status={loading} error={error}  >
-            {RenderedProducts}
+        <Loading status={loading} error={error} >
+            <CartItemList products={products}/>
         </Loading>
     </>
   )

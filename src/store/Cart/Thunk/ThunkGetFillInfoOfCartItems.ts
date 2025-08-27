@@ -3,7 +3,7 @@ import { RootState } from "@store/index";
 import axios from "axios";
 import { TProduct } from "src/Types/product";
 
-const ThunkGetFillInfoOfCartItems = createAsyncThunk("categories/ThunkGetCategories",
+const ThunkGetFillInfoOfCartItems = createAsyncThunk("cart/ThunkGetFillInfoOfCartItems",
     async(_, thunkAPI)=>{
         const { rejectWithValue, fulfillWithValue ,getState} = thunkAPI;
         const { cartSlice } = getState() as RootState;
@@ -13,8 +13,8 @@ const ThunkGetFillInfoOfCartItems = createAsyncThunk("categories/ThunkGetCategor
             return fulfillWithValue([]);
         }
     try {
-        const concatenatedItemsId = itemsId.map((el)=> `id=${el})`).join("&");
-        const response = await axios.get<TProduct>(`/products?${concatenatedItemsId}`);
+        const concatenatedItemsId = itemsId.map((el)=> `id=${el}`).join("&");
+        const response = await axios.get<TProduct[]>(`/products?${concatenatedItemsId}`);
         return response.data;
 
     } catch (error) {

@@ -4,13 +4,12 @@ import { TProduct } from "src/Types/product";
 const {cartItem,product,productImg,productInfo,cartItemSelection} = styles;
 
 
-export default function CartItem({img,title,price,id,quantity}:TProduct) {
+export default function CartItem({img,title,price,quantity,id,max}:TProduct) {
 
+    // const changeQuantity = (event: React.ChangeEvent<HTMLSelectElement>)=>{
+    //     const quantity = event.target.value;
 
-    const changeQuantity = (event: React.ChangeEvent<HTMLSelectElement>)=>{
-        const quantity = event.target.value;
-
-    }
+    // }
 
   return (
       <div className={cartItem}>
@@ -20,7 +19,7 @@ export default function CartItem({img,title,price,id,quantity}:TProduct) {
           </div>
           <div className={productInfo}>
             <h2>{title}</h2>
-            <h3>{price.toFixed(2)} EGP</h3>
+            <h3>{price?.toFixed(2) ?? "—"} EGP</h3>
             <Button
               variant="secondary"
               style={{ color: "white", width: "100px" }}
@@ -34,9 +33,9 @@ export default function CartItem({img,title,price,id,quantity}:TProduct) {
 
         <div className={cartItemSelection}>
           <span className="d-block mb-1">Quantity</span>
-          <Form.Select value={quantity} onChange={changeQuantity}>
-            {/* {renderOptions} */}
-          </Form.Select>
+          {/* <Form.Select value={quantity} onChange={changeQuantity}>
+            {renderOptions}
+          </Form.Select> */}
         </div>
       </div>
     );
