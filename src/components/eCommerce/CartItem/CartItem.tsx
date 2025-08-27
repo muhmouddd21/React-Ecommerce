@@ -1,19 +1,22 @@
 import { Form, Button } from "react-bootstrap";
 import styles from './styles.module.css'
 import { TProduct } from "src/Types/product";
+import { memo } from "react";
 const {cartItem,product,productImg,productInfo,cartItemSelection} = styles;
 
 type cartItemProps = TProduct & {
   cartChangeQuantityHandler: (id: number, quantity: number) => void;
+} &{
+    removeItemHandler:(id:number)=>void
 };
 
-export default function CartItem({img,title,price,quantity,id,max,cartChangeQuantityHandler}:cartItemProps) {
+  const CartItem = memo(({img,title,price,quantity,id,max,cartChangeQuantityHandler,removeItemHandler}:cartItemProps)=>{
 
     const changeQuantity = (event: React.ChangeEvent<HTMLSelectElement>)=>{
         const quantity = +event.target.value;
         cartChangeQuantityHandler(id,quantity);
     }
-
+   
     const renderOptions = Array(max)
       .fill(0)
       .map((_, idx) => {
@@ -38,7 +41,7 @@ export default function CartItem({img,title,price,quantity,id,max,cartChangeQuan
               variant="secondary"
               style={{ color: "white", width: "100px" }}
               className="mt-auto"
-            //   onClick={() => removeItemHandler(id)}
+              onClick={() => removeItemHandler(id)}
             >
               Remove
             </Button>
@@ -53,5 +56,5 @@ export default function CartItem({img,title,price,quantity,id,max,cartChangeQuan
         </div>
       </div>
     );
-  };
-
+  });
+export default CartItem;

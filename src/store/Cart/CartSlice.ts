@@ -35,7 +35,14 @@ const cartSlice =createSlice({
             }
         },
         cartChangeQuantity:(state,action)=>{
-        state.items[action.payload.id] = action.payload.quantity;
+            state.items[action.payload.id] = action.payload.quantity;
+
+        },
+        cartRemoveItem :(state,action)=>{
+            delete(state.items[action.payload.id])
+            state.productFullInfo =state.productFullInfo.filter((product)=>{
+                return product.id !== action.payload.id;
+            })    
 
         }
     },
@@ -61,4 +68,4 @@ const cartSlice =createSlice({
 
 
 export default cartSlice.reducer;
-export const { addToCart ,cartChangeQuantity} = cartSlice.actions;
+export const { addToCart ,cartChangeQuantity,cartRemoveItem} = cartSlice.actions;
