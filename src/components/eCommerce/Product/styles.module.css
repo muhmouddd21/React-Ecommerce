@@ -11,6 +11,7 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   cursor: pointer;
+  position: relative;
 }
 
 .product:hover {
@@ -23,11 +24,19 @@
   height: 200px;
   border-radius: 8px;
   overflow: hidden;
-  background-color: #f8f8f8;
+  background-color: #fafafa;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 12px;
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.productImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* contain so image won’t stretch */
   transition: transform 0.3s ease;
 }
 
@@ -35,10 +44,8 @@
   transform: scale(1.05);
 }
 
-.productImg img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+.product:hover .productImg img {
+  transform: scale(1.1);
 }
 
 .product h2 {
@@ -71,7 +78,14 @@
 .product button:hover {
   transform: translateY(-2px);
 }
+
 .maximumNotice {
   font-size: 12px;
   margin-bottom: 7px;
+}
+.like_button{
+  position: absolute;
+  top: 10px;
+  right: 30px;
+  z-index: 10;
 }

@@ -3,7 +3,8 @@ import { Badge} from "react-bootstrap";
 
 import styles from "./styles.module.css";
 import NavBar from "../Navbar/NavBar";
-const { headerContainer, headerLogo } = styles;
+import HeaderWishlist from "@components/eCommerce/HeaderWishlist/HeaderWishlist";
+const { headerContainer, headerLogo,icons_shape } = styles;
 
 const Header = () => {
     const leftLinks = [
@@ -23,8 +24,12 @@ const Header = () => {
         <h1 className={headerLogo}>
           <span>our</span> <Badge bg="info">Ecom</Badge>
         </h1>
+        <div className={icons_shape}> 
+          
+            <HeaderWishlist />
+            <HeaderBasket />
+        </div>
 
-        <HeaderBasket />
       </div>
         <NavBar leftLinks={leftLinks} rightLinks={rightLinks} />
     </header>

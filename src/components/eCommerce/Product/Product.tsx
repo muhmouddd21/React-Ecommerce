@@ -2,11 +2,13 @@ import { Button,Spinner } from "react-bootstrap";
 import styles from "./styles.module.css";
 import { TProduct } from "src/Types/product";
 
-
+import Like from "@assets/SVG/like.svg?react"
+import Like_fill from "@assets/SVG/like-fill.svg?react"
 import { useAppDispatch } from "@store/hooks";
 import { addToCart } from "@store/Cart/CartSlice";
 import { memo, useEffect, useState } from "react";
-const { product, productImg,maximumNotice } = styles;
+import ThunkAddRemoveWishlist from "@store/Wishlist/Thunk/ThunkAddRemoveWishlist";
+const { product, productImg,maximumNotice,like_button } = styles;
 
 
 const Product = memo(({id,title,price,img,max,quantity}:TProduct) => {
@@ -34,9 +36,16 @@ const addToCartHandler =()=>{
   dispatch(addToCart(id));
   setIsBtnDisabled(true);
 }
+const addTowishListHandler =()=>{
+  dispatch(ThunkAddRemoveWishlist(id))
+  
+}
 
   return (
     <div className={product}>
+      <div className={like_button} onClick={addTowishListHandler}>
+         <Like  style={{ fill: "#999" }}/>
+      </div>
       <div className={productImg}>
         <img
           src={img}

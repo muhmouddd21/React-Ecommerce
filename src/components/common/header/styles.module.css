@@ -21,3 +21,8 @@
   display: block;
   margin-right: 5px;
 }
+.icons_shape{
+  display: flex;
+  flex-direction: row;
+  
+}
