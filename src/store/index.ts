@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import categoriesSlice from '@store/Categories/CategoriesSlice'
 import  ProductsSlice  from '@store/Products/ProductsSlice'
+import wishlistSlice from '@store/Wishlist/wishlistSlice'
 import cartSlice from '@store/Cart/CartSlice'
 
 import { persistStore, persistReducer, FLUSH,
@@ -16,11 +17,17 @@ const cartPersistConfig = {
   storage,
   whiteList:['items']
 }
+const wishListPersistConfig = {
+  key: 'wishlist',
+  storage,
+  whiteList:['itemsId']
+}
 
 const rootReducers =combineReducers(
   {
     categoriesSlice,
     ProductsSlice,
+    wishlistSlice:persistReducer(wishListPersistConfig, wishlistSlice),
     cartSlice:persistReducer(cartPersistConfig, cartSlice)
   })
 

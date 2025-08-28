@@ -11,8 +11,9 @@ import ThunkAddRemoveWishlist from "@store/Wishlist/Thunk/ThunkAddRemoveWishlist
 const { product, productImg,maximumNotice,like_button } = styles;
 
 
-const Product = memo(({id,title,price,img,max,quantity}:TProduct) => {
+const Product = memo(({id,title,price,img,max,quantity,isLiked}:TProduct) => {
 const [isBtnDisabled, setIsBtnDisabled]=useState(false);
+const [isLoading,setIsloading] = useState(false);
 const dispatch = useAppDispatch();
 
   const currentRemainingQuantity = max - (quantity ?? 0);
@@ -25,10 +26,14 @@ useEffect(()=>{
 
   const debounce = setTimeout(()=>{
     setIsBtnDisabled(false);
+    
   },300)
 
 
-  return ()=>  clearTimeout(debounce)
+
+  return ()=>  {
+    clearTimeout(debounce)
+  }
 },[isBtnDisabled])
 
 const addToCartHandler =()=>{
@@ -37,14 +42,24 @@ const addToCartHandler =()=>{
   setIsBtnDisabled(true);
 }
 const addTowishListHandler =()=>{
-  dispatch(ThunkAddRemoveWishlist(id))
+  if (isLoading) return;
+  setIsloading(true);
+
+  dispatch(ThunkAddRemoveWishlist(id)).unwrap()
+ .finally(() => {
+      setIsloading(false);
+    });
   
 }
 
   return (
     <div className={product}>
       <div className={like_button} onClick={addTowishListHandler}>
-         <Like  style={{ fill: "#999" }}/>
+        {isLoading ? (<Spinner animation="border" size="sm" variant="primary" />) :
+        (isLiked ? <Like_fill /> : <Like  style={{ fill: "#999" }}/>)
+      }
+        
+         
       </div>
       <div className={productImg}>
         <img

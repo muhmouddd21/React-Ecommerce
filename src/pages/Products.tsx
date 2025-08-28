@@ -15,8 +15,12 @@ const Products = () => {
     const dispatch = useAppDispatch();
     const {loading, error, records }=useAppSelector((state)=>state.ProductsSlice);
       const cartItems = useAppSelector((state) => state.cartSlice.items);
+      const itemsIdOfWishList = useAppSelector(state => state.wishlistSlice.itemsId)
+
+
       const productsFullInfo = records.map((el) => ({
         ...el,
+        isLiked:itemsIdOfWishList.includes(el.id),
         quantity: cartItems[el.id] || 0,
       }));
 
