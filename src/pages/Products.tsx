@@ -34,7 +34,7 @@ const Products = () => {
 
   return (
     <Container>
-      <Heading> <span className="text-capitalize">{params.prefix}</span> Products</Heading>
+      <Heading title='Products' /> 
       <Loading status={loading} error={error}>
         <GridList records={productsFullInfo} renderRecords ={(record)=> <Product {...record} /> } />
 

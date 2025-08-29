@@ -1,6 +1,10 @@
+import { memo } from "react";
 
-export default function Heading({children}:{children: React.ReactNode}) {
+ const Heading =memo(({title}:{title:string})=>{
+  console.log("from heading");
+  
   return (
-    <p className="mb-3" style={{fontSize:"26px"}}>{children}</p>
+    <p className="mb-3" style={{fontSize:"26px"}}>{title}</p>
   )
-}
+});
+export default Heading;

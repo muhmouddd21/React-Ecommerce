@@ -35,7 +35,7 @@ export default function Cart() {
 
   return (
     <>
-        <Heading>Your Cart</Heading>
+        <Heading title="Your Cart"></Heading>
         <Loading status={loading} error={error} >
         {products.length ? (
             <>

@@ -1,0 +1,10 @@
+.HeaderIcons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.HeaderIcons > div:first-of-type{
+    margin-right: 10px;
+    padding-right: 10px;
+    border-right: 3px solid black;
+}

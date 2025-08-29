@@ -18,7 +18,7 @@ export default function Wishlist() {
   useEffect(()=>{
 
     dispatch(ThunkGetWishlist());
-    
+
     return ()=>{
       dispatch(cleanUpWishlist())
     };
@@ -34,7 +34,7 @@ export default function Wishlist() {
 
   return (
     <Container>
-      <Heading> Your Wishlist</Heading>
+      <Heading title="Your Wishlist"></Heading>
       <Loading status={loading} error={error}>
         <GridList records={records} renderRecords ={(record)=> <Product {...record} /> } />
 

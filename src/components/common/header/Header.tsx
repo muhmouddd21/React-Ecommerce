@@ -1,9 +1,9 @@
-import { HeaderBasket } from "../../eCommerce";
-import { Badge} from "react-bootstrap";
 
+import { Badge} from "react-bootstrap";
 import styles from "./styles.module.css";
 import NavBar from "../Navbar/NavBar";
-import HeaderWishlist from "@components/eCommerce/HeaderWishlist/HeaderWishlist";
+
+import HeaderRightBat from "./HeaderRightBar/HeaderRightBat";
 const { headerContainer, headerLogo,icons_shape } = styles;
 
 const Header = () => {
@@ -26,8 +26,7 @@ const Header = () => {
         </h1>
         <div className={icons_shape}> 
           
-            <HeaderWishlist />
-            <HeaderBasket />
+            <HeaderRightBat />
         </div>
 
       </div>
