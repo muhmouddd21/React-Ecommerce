@@ -2,7 +2,7 @@ import { Heading } from "@components/common";
 import CartItemList from "@components/common/CartItemList/CartItemList";
 import CartSubtotalPrice from "@components/eCommerce/CartItemSubTotal/CartItemSubtotal";
 import Loading from "@components/feedback/Loading/Loading";
-import { cartChangeQuantity, cartRemoveItem } from "@store/Cart/CartSlice";
+import { cartChangeQuantity, cartRemoveItem, cleanUpCart } from "@store/Cart/CartSlice";
 import ThunkGetFillInfoOfCartItems from "@store/Cart/Thunk/ThunkGetFillInfoOfCartItems";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { useCallback, useEffect } from "react";
@@ -16,6 +16,9 @@ export default function Cart() {
     useEffect(()=>{
         dispatch(ThunkGetFillInfoOfCartItems());
         
+        return ()=>{
+            dispatch(cleanUpCart());
+        }; 
     },[dispatch])
     
     const products =productFullInfo.map(el =>({
