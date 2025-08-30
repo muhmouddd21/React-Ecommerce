@@ -1,14 +1,15 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { TProduct } from "src/Types/product";
+import { axiosErrorHandle } from "src/utils";
 
 const ThunkGetWishlist = createAsyncThunk('wishlish/ThunkGetWishlist',
     async(_,thunkApi)=>{
-        const {fulfillWithValue,rejectWithValue}= thunkApi;
+        const {fulfillWithValue,signal}= thunkApi;
 
 
         try {
-            const itemsIdOfUser = await axios.get<{productId:number}[]>(`/wishlist?userId=1`);
+            const itemsIdOfUser = await axios.get<{productId:number}[]>(`/wishlist?userId=1`,{signal});
            
             
             if (!itemsIdOfUser.data.length) {
@@ -24,12 +25,9 @@ const ThunkGetWishlist = createAsyncThunk('wishlish/ThunkGetWishlist',
             `/products?${concatenatedItemsId}`
             );   
             return fulfillWithValue(response.data);
+
         } catch (error) {
-            if (axios.isAxiosError(error)) {
-                return rejectWithValue(error.response?.data.message || error.message);
-            } else {
-                return rejectWithValue("An unexpected error");
-            }
+            return axiosErrorHandle(error);
         }
     })
 

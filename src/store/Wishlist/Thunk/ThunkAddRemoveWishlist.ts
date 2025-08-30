@@ -1,9 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { axiosErrorHandle } from "src/utils";
 
 const ThunkAddRemoveWishlist =createAsyncThunk('wishlist/ThunkAddRemoveWishlist',
     async(id:number,thunkApi)=>{
-        const {rejectWithValue,fulfillWithValue} = thunkApi;
+        const {fulfillWithValue} = thunkApi;
 
         
         try {
@@ -20,11 +21,7 @@ const ThunkAddRemoveWishlist =createAsyncThunk('wishlist/ThunkAddRemoveWishlist'
             }
 
         } catch (error) {
-        if(axios.isAxiosError(error)){
-            return rejectWithValue(error.response?.data?.message || error.message);     
-        }else{
-            return rejectWithValue("unExpected error");
-        }
+            return axiosErrorHandle(error);
         }
 })
 export default ThunkAddRemoveWishlist;

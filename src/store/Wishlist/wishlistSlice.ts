@@ -61,7 +61,7 @@ const wishlistSlice = createSlice({
             state.loading = "succeeded";
 
             
-            state.productsFullInfo = action.payload;
+            state.productsFullInfo = action.payload ;
 
             
             });

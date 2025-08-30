@@ -1,21 +1,18 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { axiosErrorHandle } from "src/utils";
 
 
 
 
 const ThunkGetProductsByCatPrefix = createAsyncThunk("products/ThunkGetProductsByCatPrefix",
     async(prefix :string, thunkAPI)=>{
-        const { rejectWithValue } = thunkAPI;
+        const { signal } = thunkAPI;
     try {
-        const response = await axios.get(`/products?cat_prefix=${prefix}`);
+        const response = await axios.get(`/products?cat_prefix=${prefix}`,{signal});
         return response.data;
     } catch (error) {
-        if(axios.isAxiosError(error)){
-            return rejectWithValue(error.response?.data?.message || error.message);     
-        }else{
-            rejectWithValue("unExpected error");
-        }
+        return axiosErrorHandle(error);
 
     }
 })
