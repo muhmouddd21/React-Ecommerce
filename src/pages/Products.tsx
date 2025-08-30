@@ -1,5 +1,3 @@
-
-
 import { Container} from "react-bootstrap";
 import { Product } from "@components/eCommerce";
 import Loading from "@components/feedback/Loading/Loading";

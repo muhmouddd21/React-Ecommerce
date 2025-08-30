@@ -8,7 +8,6 @@ import { Container } from "react-bootstrap";
 export default function Wishlist() {
    const {loading,error,records}= useWishlist();
 
-
   return (
     <Container>
       <Heading title="Your Wishlist"></Heading>
