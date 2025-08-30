@@ -1,36 +1,14 @@
-import { useEffect } from "react";
-import { useAppDispatch } from "@store/hooks";
-import { useAppSelector } from "@store/hooks";
-import { ProductsCleanup, ThunkGetProductsByCatPrefix } from "@store/Products/ProductsSlice";
-import { useParams } from "react-router-dom";
+
 
 import { Container} from "react-bootstrap";
 import { Product } from "@components/eCommerce";
 import Loading from "@components/feedback/Loading/Loading";
 import GridList from "@components/common/GridList/GridList";
 import { Heading } from "@components/common";
+import useProducts from "@hooks/useProducts";
 
 const Products = () => {
-    const params = useParams();
-    const dispatch = useAppDispatch();
-    const {loading, error, records }=useAppSelector((state)=>state.ProductsSlice);
-      const cartItems = useAppSelector((state) => state.cartSlice.items);
-      const itemsIdOfWishList = useAppSelector(state => state.wishlistSlice.itemsId)
-
-
-      const productsFullInfo = records.map((el) => ({
-        ...el,
-        isLiked:itemsIdOfWishList.includes(el.id),
-        quantity: cartItems[el.id] || 0,
-      }));
-
-    useEffect(() => {
-        dispatch(ThunkGetProductsByCatPrefix(params.prefix as string));
-        
-        return () => {
-        dispatch(ProductsCleanup());
-        };
-    }, [dispatch, params]);
+     const {loading,error,productsFullInfo} = useProducts();
 
   return (
     <Container>

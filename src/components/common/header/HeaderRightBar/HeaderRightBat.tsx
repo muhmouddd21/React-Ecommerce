@@ -16,14 +16,14 @@ function HeaderRightBat() {
       <HeaderQuantity  
         title='Wishlist'
         to='wishlist'
-        quantity={cartTotalQuantity}
+        quantity={wishlistTotalQuantity.length}
         IconToRender={<WishlistItem title="basket icon" width={30} height={30} />}
       
       />
       <HeaderQuantity 
       title= "Cart"
       to='cart'
-      quantity={wishlistTotalQuantity.length}
+      quantity={cartTotalQuantity}
       IconToRender={<Logo title="basket icon" width={30} height={30} />}
       />
 
