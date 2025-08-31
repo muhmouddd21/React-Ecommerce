@@ -3,7 +3,7 @@ import { Col, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { SubmitHandler,useForm } from 'react-hook-form';
-import { signInSchema,signInType } from 'src/Validations/signInSchema';
+import { signInSchema,signInType } from '@validations/signInSchema';
 import { zodResolver } from "@hookform/resolvers/zod";
 import Input from '@components/forms/Input/Input';
 

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { TProduct } from "src/Types/product";
-import { axiosErrorHandle } from "src/utils";
+import  axiosErrorHandle  from "@utils/axiosErrorHandle";
 
 const ThunkGetWishlist = createAsyncThunk('wishlish/ThunkGetWishlist',
     async(_,thunkApi)=>{

@@ -26,11 +26,12 @@
       "@pages/*": ["src/pages/*"],
       "@routes/*": ["src/routes/*"],
       "@store/*": ["src/store/*"],
-      "@customTypes/*":["src/types/*"],
+      "@types/*": ["src/types/*"],
       "@styles/*": ["src/styles/*"],
       "@layouts/*": ["src/layouts/*"],
-      "@util/*": ["src/util/*"],
-      "@services/*": ["src/services/*"]
+      "@utils/*": ["src/utils/*"],
+      "@services/*": ["src/services/*"],
+      "@validations/*": ["src/Validations/*"]
     },
     /* Linting */
     "strict": true,

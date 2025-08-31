@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { axiosErrorHandle } from "src/utils";
+import  axiosErrorHandle  from "@utils/axiosErrorHandle";
 
 
 
