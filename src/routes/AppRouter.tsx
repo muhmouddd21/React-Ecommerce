@@ -11,25 +11,37 @@ import { MainLayout } from "@layouts/index";
 import Error from '@pages/Error';
 import Login from '@pages/Login';
 import Register from '@pages/Register';
+import LottieHandler from '@components/feedback/LottieHandler/LottieHandler';
+import PageSuspenseFallback from '@components/feedback/PageSuspenceFallback/PageSuspenseFallback';
 
 
 const router = createBrowserRouter([
     {
     path: "/",
-    element: <MainLayout />,
+    element: (
+        <Suspense
+        fallback={
+          <div style={{ marginTop: "10%" }}>
+            <LottieHandler type="loading" message="Loading please wait..." />
+          </div>
+        }
+      >
+        <MainLayout />
+      </Suspense>
+    ),
     errorElement: <Error />,
     children:[
                 {
                     index: true,
-                    element:  <Suspense fallback="loading please wait..."><Home /></Suspense>  
+                    element:  <PageSuspenseFallback ><Home /></PageSuspenseFallback>  
                 },
                 {
                     path: "categories",
-                    element: <Suspense fallback="loading please wait..."> <Categories /></Suspense> 
+                    element: <PageSuspenseFallback > <Categories /></PageSuspenseFallback> 
                 },
                 {
                     path: "categories/products/:prefix",
-                    element: <Suspense fallback="loading please wait..."> <Products /></Suspense>,
+                    element: <PageSuspenseFallback > <Products /></PageSuspenseFallback>,
                     loader:({params})=>{
                     if (
                         typeof params.prefix !== "string" ||
@@ -45,15 +57,15 @@ const router = createBrowserRouter([
                 },
                 {
                     path: "about-us",
-                    element: <Suspense fallback="loading please wait..."> <AboutUs /> </Suspense> 
+                    element: <PageSuspenseFallback > <AboutUs /> </PageSuspenseFallback> 
                 },
                 {
                     path: "cart",
-                    element: <Suspense fallback="loading please wait..."> <Cart/> </Suspense> 
+                    element: <PageSuspenseFallback> <Cart/> </PageSuspenseFallback> 
                 },
                 {
                     path: "wishlist",
-                    element: <Suspense fallback="loading please wait..."> <Wishlist/> </Suspense> 
+                    element: <PageSuspenseFallback> <Wishlist/> </PageSuspenseFallback> 
                 },
                 {
                     path:'login',
