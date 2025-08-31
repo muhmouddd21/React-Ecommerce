@@ -26,7 +26,7 @@ export default function Login() {
       }
   return (
     <>
-    <Heading title ="User Registration" />
+    <Heading title ="User Login" />
      <Row>
       <Col md={{span:"6", offset:"3"}}>
          <Form onSubmit={handleSubmit(submitForm)}>
