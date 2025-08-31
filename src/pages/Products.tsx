@@ -11,7 +11,7 @@ const Products = () => {
   return (
     <Container>
       <Heading title='Products' /> 
-      <Loading status={loading} error={error}>
+      <Loading status={loading} error={error} type="product">
         <GridList records={productsFullInfo} renderRecords ={(record)=> <Product {...record} /> } />
 
       </Loading>
