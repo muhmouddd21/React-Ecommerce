@@ -15,7 +15,7 @@ const ThunkGetFillInfoOfCartItems = createAsyncThunk("cart/ThunkGetFillInfoOfCar
         }
     try {
         
-        const concatenatedItemsId = itemsId.map((el)=> `id=${el}`).join("&");
+        const concatenatedItemsId = itemsId.map((el)=> `productId=${el}`).join("&");
         const response = await axios.get<TProduct[]>(`/products?${concatenatedItemsId}`,{signal});
         return response.data;
 

@@ -17,7 +17,7 @@ const ThunkGetWishlist = createAsyncThunk('wishlish/ThunkGetWishlist',
             }
             
             
-            const concatenatedItemsId = itemsIdOfUser.data.map((itemId)=> `id=${itemId.productId}`).join('&');
+            const concatenatedItemsId = itemsIdOfUser.data.map((itemId)=> `productId=${itemId.productId}`).join('&');
  
             console.log(concatenatedItemsId);
             

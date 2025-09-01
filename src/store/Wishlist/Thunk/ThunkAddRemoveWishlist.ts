@@ -9,9 +9,9 @@ const ThunkAddRemoveWishlist =createAsyncThunk('wishlist/ThunkAddRemoveWishlist'
         
         try {
             const isRecordExist = await axios.get(`/wishlist?userId=1&productId=${id}`);
-
+            
             if(isRecordExist.data.length >0){
-                await axios.delete(`/wishlist/${isRecordExist.data[0].id}`);
+                await axios.delete(`/wishlist/${isRecordExist.data[0].productId}`);
                 return fulfillWithValue({ type: "remove", id });
             }else{
 
