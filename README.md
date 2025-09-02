@@ -1,69 +1,27 @@
-# React + TypeScript + Vite
+# Ecommerce[Reactjs-Typescript-ReduxToolkit-Nodejs-Sqlite]
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## BackendRepo : https://github.com/muhmouddd21/ecommerce-Back.git
 
-Currently, two official plugins are available:
+## 📖 Overview
+mainly this project focused on React by using typescript And writing Clean code
+using more Redux toolkit,React hook form 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
+   
+- Creating a great structure of project
+- AddToCart and AddTowishlist using redux asyncThunk synchronized with backend DB
+- Using axios handling errors
+- cancel request if the user entered another page before the current page loading
+- Create LazyLoading
+- create skeleton for improving UX
+- lottie Animation during navigating,lazy loading, cart Empty,wishlist Empty for improving UX
+- Before registeration, there is an api request to check if that email used before or not
+- seperating logic from pages using custom hooks 
 
-## Expanding the ESLint configuration
+```bash
+# Example for Node.js
+#backend Repo
+git clone https://github.com/muhmouddd21/ecommerce-Back.git
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
