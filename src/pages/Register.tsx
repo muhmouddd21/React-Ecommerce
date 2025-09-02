@@ -1,5 +1,5 @@
 import { Heading } from '@components/common';
-import { Col, Row } from 'react-bootstrap';
+import { Col, Row,Spinner } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { SubmitHandler,useForm } from 'react-hook-form';
@@ -7,10 +7,17 @@ import { signUpSchema, signUpType } from '@validations/signUpSchema';
 import { zodResolver } from "@hookform/resolvers/zod";
 import Input from '@components/forms/Input/Input';
 import useCheckEmailForAvailability from '@hooks/useCheckEmailForAvailability';
+import { useAppDispatch, useAppSelector } from '@store/hooks';
+import thunkAuthRegister from '@store/Auth/Thunk/ThunkAuthRegister';
+import { useNavigate } from 'react-router-dom';
 
 
 
 export default function Register() {
+  const dispatch = useAppDispatch();
+  const {loading,error}=useAppSelector(state=> state.AuthSlice)
+  const navigate = useNavigate();
+
       const {
         register,
         handleSubmit,
@@ -24,11 +31,14 @@ export default function Register() {
       });
 
     
-
- 
 const {emailAvailabilityStatus,enteredEmail,checkEmailAvailability,resetEmailAvailability} =useCheckEmailForAvailability();
 const submitForm:SubmitHandler<signUpType> =(data) =>{
-  console.log(data);
+    const { firstName, lastName, email, password } = data;
+    dispatch(thunkAuthRegister({firstName, lastName, email, password}))
+    .unwrap()
+    .then(()=>{
+      navigate("/login?message=account_created");
+    })
   
 }
 const emailOnBlurHandler =async (e:React.FocusEvent<HTMLInputElement>)=>{
@@ -98,8 +108,18 @@ const emailOnBlurHandler =async (e:React.FocusEvent<HTMLInputElement>)=>{
                 className='text-light' 
                 disabled={emailAvailabilityStatus === "checking" ? true : false}
               >
-                Submit
+                {loading==="pending" ? 
+                <>
+                <Spinner animation="border" size="sm" className="me-2" />
+                Loading...
+                </>
+
+                :('Submit')}
+                
               </Button>
+              {error && (
+              <p style={{ color: "#DC3545", marginTop: "10px" }}>{error}</p>
+            )}
           </Form>
       </Col>
        
