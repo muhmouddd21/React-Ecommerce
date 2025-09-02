@@ -10,23 +10,23 @@ import useCheckEmailForAvailability from '@hooks/useCheckEmailForAvailability';
 
 
 
-
 export default function Register() {
       const {
         register,
         handleSubmit,
         formState: { errors },
         getFieldState,
-        trigger
+        trigger,
 
       } = useForm<signUpType>({
         mode:"onBlur",
         resolver:zodResolver(signUpSchema)
       });
 
+    
 
+ 
 const {emailAvailabilityStatus,enteredEmail,checkEmailAvailability,resetEmailAvailability} =useCheckEmailForAvailability();
-
 const submitForm:SubmitHandler<signUpType> =(data) =>{
   console.log(data);
   
@@ -43,7 +43,6 @@ const emailOnBlurHandler =async (e:React.FocusEvent<HTMLInputElement>)=>{
   }
   
 }
-
 
 
   return (
@@ -81,12 +80,14 @@ const emailOnBlurHandler =async (e:React.FocusEvent<HTMLInputElement>)=>{
               <Input 
               label='Password'
               name ="password"
+              type='password'
               register={register}
               error ={errors.password?.message}
               />
               <Input 
               label='Confirm Password'
               name ="confirmPassword"
+              type='password'
               register={register}
               error ={errors.confirmPassword?.message}
               />

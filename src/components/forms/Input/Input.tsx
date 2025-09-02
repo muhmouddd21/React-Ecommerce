@@ -40,6 +40,7 @@ const Input= <TFieldValue extends FieldValues>({
           <Form.Label>{label}</Form.Label>
           <Form.Control type={type} 
           isInvalid={error ? true:false}
+          isValid ={success ? true: false}
            {...register(name)} 
           onBlur={onBlurHandler}
           disabled={disabled}

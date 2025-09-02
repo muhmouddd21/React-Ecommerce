@@ -14,7 +14,10 @@ function useCheckEmailForAvailability() {
 
         try {
             const response =await axios.get(`/users?email=${email}`);
-            if(!response.data.length){
+            console.log(response.data.length);
+            
+            if(response.data.length === 0){
+
                 setEmailAvailabilityStatus("available");
             }else{
                 setEmailAvailabilityStatus("notAvailable");
