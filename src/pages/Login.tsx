@@ -8,6 +8,8 @@ import Input from '@components/forms/Input/Input';
 import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import ThunkAuthLogin from '@store/Auth/Thunk/ThunkAuthLogin';
+import { useEffect } from 'react';
+import { resetUI } from '@store/Auth/authSlice';
 
 
 
@@ -35,6 +37,12 @@ export default function Login() {
         })
         
       }
+      useEffect(()=>{
+
+        return ()=>{
+          dispatch(resetUI());
+        }
+      },[dispatch])
 
 
     if (jwt) {

@@ -27,7 +27,10 @@ const AuthSlice =createSlice({
     name:"AuthSlice",
     initialState:initialState,
     reducers:{
-
+        resetUI:(state)=>{
+            state.loading="idle";
+            state.error=null;
+        },
     },
     extraReducers(builder){
         builder.addCase(thunkAuthRegister.pending,(state)=>{
@@ -69,3 +72,4 @@ const AuthSlice =createSlice({
 })
 
 export default AuthSlice.reducer
+export const {resetUI} = AuthSlice.actions
