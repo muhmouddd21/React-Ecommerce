@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { TLoading } from 'src/Types/shared';
 import thunkAuthRegister from "./Thunk/ThunkAuthRegister";
+import ThunkAuthLogin from "./Thunk/ThunkAuthLogin";
 
 
 interface IAuthState{
@@ -12,14 +13,14 @@ interface IAuthState{
     } | null,
     loading:TLoading
     error:string|null
-    accessToken:string|null
+    jwt:string|null
 }
 
 const initialState:IAuthState={
     user:null,
     loading:"idle",
     error:null,
-    accessToken:null
+    jwt:null
 }
 
 const AuthSlice =createSlice({
@@ -44,8 +45,27 @@ const AuthSlice =createSlice({
             }
             
         });
+        builder.addCase(ThunkAuthLogin.pending,(state)=>{
+            state.loading = "pending";
+            state.error=null
+
+        });
+        builder.addCase(ThunkAuthLogin.fulfilled,(state,action)=>{
+            state.loading = "succeeded";
+            state.user=action.payload.user;
+            state.jwt=action.payload.jwt;
+            
+        });
+        builder.addCase(ThunkAuthLogin.rejected,(state,action)=>{
+            state.loading = "failed";
+            if (typeof action.payload ==="string"){
+                state.error = action.payload;
+            }
+            
+        });
+
+        
     }
 })
 
 export default AuthSlice.reducer
-// export {} = authSlice.actions

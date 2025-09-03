@@ -1,15 +1,22 @@
 import { Heading } from '@components/common';
 import { Col, Row } from 'react-bootstrap';
-import {Button,Form,Alert} from 'react-bootstrap';
+import {Button,Form,Alert,Spinner} from 'react-bootstrap';
 import { SubmitHandler,useForm } from 'react-hook-form';
 import { signInSchema,signInType } from '@validations/signInSchema';
 import { zodResolver } from "@hookform/resolvers/zod";
 import Input from '@components/forms/Input/Input';
+import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '@store/hooks';
+import ThunkAuthLogin from '@store/Auth/Thunk/ThunkAuthLogin';
 
 
 
 
 export default function Login() {
+  const [searchParams,setSearchParams]=useSearchParams();
+  const navigate =useNavigate();
+  const dispatch = useAppDispatch();
+    const { error, loading, jwt } = useAppSelector((state) => state.AuthSlice);
       const {
         register,
         handleSubmit,
@@ -20,14 +27,32 @@ export default function Login() {
         resolver:zodResolver(signInSchema)
       });
       const submitForm:SubmitHandler<signInType> =(data) =>{
-        console.log(data);
+          if (searchParams.get("message")) {
+            setSearchParams("");
+          }
+        dispatch(ThunkAuthLogin(data)).unwrap().then(()=>{
+          navigate('/');
+        })
         
       }
+
+
+    if (jwt) {
+      return <Navigate to="/" />;
+    }
   return (
     <>
     <Heading title ="User Login" />
      <Row>
+
       <Col md={{span:"6", offset:"3"}}>
+
+          {searchParams.get('message') === "account_created" &&
+          (
+            <Alert variant="success">
+              Your account successfully created, please login
+            </Alert>
+          )}
          <Form onSubmit={handleSubmit(submitForm)}>
 
 
@@ -44,10 +69,20 @@ export default function Login() {
               register={register}
               error ={errors.password?.message}
               />
-
+              
+              
               <Button variant="info" type="submit" className='text-light'>
-                Submit
+                {loading === "pending" ?
+                <>
+                    <Spinner animation='border' size='sm' /> 
+                    Loading... 
+                </>
+                 : ('Submit')}
+                
               </Button>
+              {error && (
+                <p style={{ color: "#DC3545", marginTop: "10px" }}>{error}</p>
+              )}
           </Form>
       </Col>
        

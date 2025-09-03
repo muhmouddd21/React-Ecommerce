@@ -108,13 +108,14 @@ const emailOnBlurHandler =async (e:React.FocusEvent<HTMLInputElement>)=>{
                 className='text-light' 
                 disabled={emailAvailabilityStatus === "checking" ? true : false}
               >
-                {loading==="pending" ? 
+              {loading === "pending" ? (
                 <>
-                <Spinner animation="border" size="sm" className="me-2" />
-                Loading...
+                  <Spinner animation="border" size="sm" />
+                  Loading...
                 </>
-
-                :('Submit')}
+              ) : (
+                'Submit'
+              )}
                 
               </Button>
               {error && (

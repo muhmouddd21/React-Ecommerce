@@ -11,7 +11,7 @@ type TFormData = {
 
 const thunkAuthRegister=createAsyncThunk('auth/ThunkAuthRegister',async(formData: TFormData,ThunkApi)=>{
     const {fulfillWithValue,rejectWithValue} = ThunkApi;
-    try {
+    try {   
         const response = await axios.post('/users/signup',formData)
         return  fulfillWithValue(response.data);
     } catch (error) {

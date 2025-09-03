@@ -12,6 +12,19 @@ import { persistStore, persistReducer, FLUSH,
   REGISTER, } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
+
+const rootPersistConfig ={
+  key:'root',
+  storage,
+  whiteList:['cart','auth']
+}
+
+const authPersistConfig = {
+  key: "auth",
+  storage,
+  whiteList: ["user", "accessToken"],
+};
+
 const cartPersistConfig = {
   key: 'cart',
   storage,
@@ -27,13 +40,15 @@ const rootReducers =combineReducers(
   {
     categoriesSlice,
     ProductsSlice,
-    AuthSlice,
+    AuthSlice:persistReducer(authPersistConfig,AuthSlice),
     wishlistSlice:persistReducer(wishListPersistConfig, wishlistSlice),
     cartSlice:persistReducer(cartPersistConfig, cartSlice)
   })
 
+const persistedReducer = persistReducer(rootPersistConfig, rootReducers);
+
 const store = configureStore({
-  reducer: rootReducers,
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
