@@ -1,3 +1,4 @@
+import {  logOut } from '@store/Auth/authSlice';
 import { createSlice } from "@reduxjs/toolkit";
 import ThunkAddRemoveWishlist from "./Thunk/ThunkAddRemoveWishlist";
 import { TLoading } from "src/Types/shared";
@@ -60,8 +61,11 @@ const wishlistSlice = createSlice({
             builder.addCase(ThunkGetWishlist.fulfilled, (state, action) => {
             state.loading = "succeeded";
 
-            
-            state.productsFullInfo = action.payload ;
+            if (action.payload.dataType === "ProductsFullInfo") {
+                state.productsFullInfo = action.payload.data as TProduct[];
+            } else if (action.payload.dataType === "productsIds") {
+                state.itemsId = action.payload.data as number[];
+            }
 
             
             });
@@ -72,6 +76,11 @@ const wishlistSlice = createSlice({
                 state.error = action.payload;
             }
             });
+
+            builder.addCase(logOut,(state)=>{
+                state.itemsId = [];
+                state.productsFullInfo = [];
+            })
 
 
     }

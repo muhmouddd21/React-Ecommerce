@@ -8,12 +8,15 @@ using more Redux toolkit,React hook form
 
 ## 🚀 Features
    
-- Creating a great structure of project
+- Created a great structure of project
 - AddToCart and AddTowishlist using redux asyncThunk synchronized with backend DB
 - Using axios handling errors
 - cancel request if the user entered another page before the current page loading
-- Create LazyLoading
-- create skeleton for improving UX
+- Created LazyLoading
+- created skeleton for improving UX
+- Created protected routes using high order component
+- After logging out of a user wishlist reset to zero
+- optimized the app by removing global state after leaving a certein page contains that state
 - lottie Animation during navigating,lazy loading, cart Empty,wishlist Empty for improving UX
 - Before registeration, there is an api request to check if that email used before or not
 - seperating logic from pages using custom hooks 
