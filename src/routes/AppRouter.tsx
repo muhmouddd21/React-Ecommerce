@@ -13,6 +13,8 @@ import Login from '@pages/Login';
 import Register from '@pages/Register';
 import LottieHandler from '@components/feedback/LottieHandler/LottieHandler';
 import PageSuspenseFallback from '@components/feedback/PageSuspenceFallback/PageSuspenseFallback';
+import ProtectedRoute from '@components/common/protectedRoute/ProtectedRoute';
+import Profile from '@pages/Profile';
 
 
 const router = createBrowserRouter([
@@ -65,7 +67,12 @@ const router = createBrowserRouter([
                 },
                 {
                     path: "wishlist",
-                    element: <PageSuspenseFallback> <Wishlist/> </PageSuspenseFallback> 
+
+                    element: 
+                    <ProtectedRoute>
+                        <PageSuspenseFallback> <Wishlist/> </PageSuspenseFallback> 
+                    </ProtectedRoute>
+
                 },
                 {
                     path:'login',
@@ -74,6 +81,13 @@ const router = createBrowserRouter([
                 {
                     path:'register',
                     element: <Register />
+                },
+                {
+                    path:'profile',
+                    element:
+                    <ProtectedRoute>
+                        <PageSuspenseFallback> <Profile/> </PageSuspenseFallback> 
+                    </ProtectedRoute>
                 }
 
     ]

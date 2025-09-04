@@ -40,7 +40,7 @@ export default function Login() {
       useEffect(()=>{
 
         return ()=>{
-          dispatch(resetUI());
+          dispatch(resetUI());  
         }
       },[dispatch])
 
@@ -54,6 +54,14 @@ export default function Login() {
      <Row>
 
       <Col md={{span:"6", offset:"3"}}>
+
+        {searchParams.get('message') === 'login_required' &&
+          <Alert variant="info">
+              You don't authorize to go here, please login first
+            </Alert>
+          
+        }
+
 
           {searchParams.get('message') === "account_created" &&
           (
@@ -76,6 +84,7 @@ export default function Login() {
               name ="password"
               register={register}
               error ={errors.password?.message}
+              type='password'
               />
               
               
