@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import api from "@services/axios-global";
 import axiosErrorHandle from "@utils/axiosErrorHandle";
 import { signInType } from '@validations/signInSchema';
-import axios from "axios";
 
 type TResponse ={
         user:{
@@ -19,7 +19,7 @@ const ThunkAuthLogin =createAsyncThunk('auth/ThunkAuthLogin',async(formData:sign
     const {email :login,password} = formData;
     const payload ={login,password}
 try {
-    const response =await axios.post<TResponse>('/users/signin',payload);
+    const response =await api.post<TResponse>('/users/signin',payload);
 
     
     return fulfillWithValue(response.data);

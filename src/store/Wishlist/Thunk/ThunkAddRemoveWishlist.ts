@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 import  axiosErrorHandle  from "@utils/axiosErrorHandle";
 import { RootState } from "@store/index";
+import api from "@services/axios-global";
 
 
 const ThunkAddRemoveWishlist =createAsyncThunk('wishlist/ThunkAddRemoveWishlist',
@@ -10,15 +10,15 @@ const ThunkAddRemoveWishlist =createAsyncThunk('wishlist/ThunkAddRemoveWishlist'
         const {AuthSlice}=getState() as RootState
         
         try {
-            const isRecordExist = await axios.get(`/wishlist?userId=${AuthSlice.user?.id}&productId=${id}`);
+            const isRecordExist = await api.get(`/wishlist?userId=${AuthSlice.user?.id}&productId=${id}`);
             
             if(isRecordExist.data.length >0){
-                await axios.delete(`/wishlist/${isRecordExist.data[0].productId}`);
+                await api.delete(`/wishlist/${isRecordExist.data[0].productId}`);
                 return fulfillWithValue({ type: "remove", id });
             }else{
 
                 
-                await axios.post("/wishlist",{userId:AuthSlice.user?.id,productId:id});
+                await api.post("/wishlist",{userId:AuthSlice.user?.id,productId:id});
                 return fulfillWithValue({ type: "add", id })
             }
 

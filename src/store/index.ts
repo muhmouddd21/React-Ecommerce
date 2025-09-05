@@ -10,7 +10,9 @@ import { persistStore, persistReducer, FLUSH,
   PERSIST,
   PURGE,
   REGISTER, } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
+  import storage from 'redux-persist/lib/storage'
+  import { setStore } from '@services/axios-global';
+
 
 
 const rootPersistConfig ={
@@ -57,10 +59,13 @@ const store = configureStore({
     }),
 })
 
+
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch
 const persistor = persistStore(store);
+setStore(store);
+export type AppStore = typeof store;
 export {store,persistor};
 

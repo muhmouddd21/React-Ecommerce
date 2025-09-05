@@ -1,7 +1,6 @@
-import { logOut } from "@store/Auth/authSlice";
-import { useAppSelector } from "@store/hooks";
+import ThunkAuthLogout from "@store/Auth/Thunk/ThunkAuthLogout";
+import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
-import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 
 type LinkItem = {
@@ -17,10 +16,12 @@ type NavBarProps = {
 
 export default function NavBar({ leftLinks = [], rightLinks = [] }:NavBarProps ) {
   const {user,jwt}=useAppSelector(state => state.AuthSlice)
-  const dispatch = useDispatch()
+  const dispatchAsync = useAppDispatch()
     const navigate =useNavigate()
+
     const handleLogout = () => {
-    dispatch(logOut());
+    dispatchAsync(ThunkAuthLogout());
+
     navigate("/");  // redirect to home after logout
   };
   return (

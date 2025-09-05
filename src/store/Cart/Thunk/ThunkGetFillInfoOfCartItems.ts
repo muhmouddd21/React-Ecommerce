@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "@store/index";
-import axios from "axios";
 import { TProduct } from "src/Types/product";
 import  axiosErrorHandle  from "@utils/axiosErrorHandle";
+import api from "@services/axios-global";
 
 const ThunkGetFillInfoOfCartItems = createAsyncThunk("cart/ThunkGetFillInfoOfCartItems",
     async(_, thunkAPI)=>{
@@ -16,7 +16,7 @@ const ThunkGetFillInfoOfCartItems = createAsyncThunk("cart/ThunkGetFillInfoOfCar
     try {
         
         const concatenatedItemsId = itemsId.map((el)=> `productId=${el}`).join("&");
-        const response = await axios.get<TProduct[]>(`/products?${concatenatedItemsId}`,{signal});
+        const response = await api.get<TProduct[]>(`/products?${concatenatedItemsId}`,{signal});
         return response.data;
 
     } catch (error) {
