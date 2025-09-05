@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from '@store/hooks';
 import ThunkAuthLogin from '@store/Auth/Thunk/ThunkAuthLogin';
 import { useEffect } from 'react';
 import { resetUI } from '@store/Auth/authSlice';
+import ThunkGetWishlist from '@store/Wishlist/Thunk/ThunkGetWishlist';
 
 
 
@@ -32,9 +33,12 @@ export default function Login() {
           if (searchParams.get("message")) {
             setSearchParams("");
           }
-        dispatch(ThunkAuthLogin(data)).unwrap().then(()=>{
+
+        dispatch(ThunkAuthLogin(data)).unwrap().then(async()=>{
+          await dispatch(ThunkGetWishlist({dataType:"productsId"}))
           navigate('/');
         })
+
         
       }
       useEffect(()=>{

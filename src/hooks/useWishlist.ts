@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import ThunkGetWishlist from "@store/Wishlist/Thunk/ThunkGetWishlist";
 import { cleanUpWishlist } from "@store/Wishlist/wishlistSlice";
-import { useEffect } from "react";
+import {  useLayoutEffect } from "react";
 
 
 function useWishlist() {
@@ -10,15 +10,14 @@ const dispatch =useAppDispatch();
   const { loading, error, productsFullInfo } = useAppSelector(
     (state) => state.wishlistSlice
   );
-
-  useEffect(()=>{
-
-    dispatch(ThunkGetWishlist());
+useLayoutEffect(()=>{
+    dispatch(ThunkGetWishlist({dataType:"productsFullInfo"}));
 
     return ()=>{
       dispatch(cleanUpWishlist())
     };
-  },[dispatch])
+},[dispatch])
+
 
   
   const records = productsFullInfo.map((el) => ({

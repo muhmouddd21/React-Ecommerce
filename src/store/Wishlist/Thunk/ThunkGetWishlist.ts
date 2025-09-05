@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { TProduct } from "src/Types/product";
 import  axiosErrorHandle  from "@utils/axiosErrorHandle";
-import { RootState } from '@store/index';
 import api from "@services/axios-global";
 
 
@@ -11,15 +10,13 @@ type TDataType ={
 
 
 const ThunkGetWishlist = createAsyncThunk('wishlish/ThunkGetWishlist',
-    async({dataType}:TDataType,thunkApi)=>{
-        const {fulfillWithValue,signal,getState}= thunkApi;
-        const {AuthSlice}=getState()as RootState 
+    async({dataType}:TDataType = { dataType: "productsId" },thunkApi)=>{
+        const {fulfillWithValue,signal}= thunkApi;
 
         
-
         try {
             const itemsIdOfUser = await api.get<{productId:number}[]>(
-                `/wishlist?userId=${AuthSlice.user?.id}`
+                `/wishlist`
                 ,{signal});
            
             if (!itemsIdOfUser.data.length) {
@@ -27,7 +24,9 @@ const ThunkGetWishlist = createAsyncThunk('wishlish/ThunkGetWishlist',
             }
             
             if(dataType === "productsId"){
+
                 const concatenatedItemsId = itemsIdOfUser.data.map((itemId)=> itemId.productId);
+                
                 return fulfillWithValue({data:concatenatedItemsId,dataType:"productsId"});
             }else{
             const concatenatedItemsId = itemsIdOfUser.data.map((itemId)=> `productId=${itemId.productId}`).join('&');
