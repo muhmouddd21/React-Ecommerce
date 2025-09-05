@@ -1,5 +1,5 @@
 import { createBrowserRouter,RouterProvider } from 'react-router-dom';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 const Home = lazy(()=>import("@pages/Home"));
 const Categories = lazy(()=>import("@pages/Categories"));
 const AboutUs = lazy(()=> import("@pages/AboutUs"));
@@ -15,6 +15,8 @@ import LottieHandler from '@components/feedback/LottieHandler/LottieHandler';
 import PageSuspenseFallback from '@components/feedback/PageSuspenceFallback/PageSuspenseFallback';
 import ProtectedRoute from '@components/common/protectedRoute/ProtectedRoute';
 import Profile from '@pages/Profile';
+import { useAppDispatch, useAppSelector } from '@store/hooks';
+import ThunkCheckAuth from '@store/Auth/Thunk/ThunkCheckAuth';
 
 
 const router = createBrowserRouter([
@@ -95,6 +97,23 @@ const router = createBrowserRouter([
     }
 ])
 const AppRouter = () => {
+    const dispatch =useAppDispatch();
+    const isInitialized= useAppSelector(state=>state.AuthSlice.isInitialized)
+
+    useEffect(()=>{
+        dispatch(ThunkCheckAuth());
+    },[dispatch])
+
+
+    if (!isInitialized) {
+        return (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                <LottieHandler type="loading" message="Initializing session..." />
+            </div>
+        );
+    }
+
+
   return <RouterProvider router={router} />;
 };
 

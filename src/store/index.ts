@@ -18,24 +18,24 @@ import { persistStore, persistReducer, FLUSH,
 const rootPersistConfig ={
   key:'root',
   storage,
-  whiteList:['cart','auth']
+  whitelist:['cart','auth']
 }
 
 const authPersistConfig = {
   key: "auth",
   storage,
-  whiteList: ["user", "accessToken"],
+  whitelist: ["user"],
 };
 
 const cartPersistConfig = {
   key: 'cart',
   storage,
-  whiteList:['items']
+  whitelist:['items']
 }
 const wishListPersistConfig = {
   key: 'wishlist',
   storage,
-  whiteList:['itemsId']
+  whitelist:['itemsId']
 }
 
 const rootReducers =combineReducers(

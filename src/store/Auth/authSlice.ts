@@ -3,6 +3,7 @@ import { TLoading } from 'src/Types/shared';
 import thunkAuthRegister from "./Thunk/ThunkAuthRegister";
 import ThunkAuthLogin from "./Thunk/ThunkAuthLogin";
 import ThunkAuthLogout from "./Thunk/ThunkAuthLogout";
+import ThunkCheckAuth from "./Thunk/ThunkCheckAuth";
 
 
 interface IAuthState{
@@ -15,13 +16,15 @@ interface IAuthState{
     loading:TLoading
     error:string|null
     jwt:string|null
+    isInitialized:boolean
 }
 
 const initialState:IAuthState={
     user:null,
     loading:"idle",
     error:null,
-    jwt:null
+    jwt:null,
+    isInitialized: false,
 }
 
 const AuthSlice =createSlice({
@@ -93,6 +96,25 @@ const AuthSlice =createSlice({
             }
             
         });
+        builder
+            // ... (loginUser cases)
+            // --- Handle checkAuth cases ---
+            .addCase(ThunkCheckAuth.pending, (state) => {
+                state.loading = 'pending';
+            })
+            .addCase(ThunkCheckAuth.fulfilled, (state, action) => {
+                state.loading = 'succeeded';
+                // Assuming the refresh endpoint returns { accessToken, user }                
+                state.user = action.payload.user; 
+                state.jwt = action.payload.accessToken;
+                state.isInitialized = true;
+                
+            })
+            .addCase(ThunkCheckAuth.rejected, (state) => {
+                state.loading = 'failed';
+                state.isInitialized = true; // We tried, and it failed. App can now proceed.
+
+            });
 
 
         
