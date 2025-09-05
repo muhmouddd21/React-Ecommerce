@@ -11,9 +11,10 @@ const dispatch =useAppDispatch();
     (state) => state.wishlistSlice
   );
 useLayoutEffect(()=>{
-    dispatch(ThunkGetWishlist({dataType:"productsFullInfo"}));
+    const promise =dispatch(ThunkGetWishlist({dataType:"productsFullInfo"}));
 
     return ()=>{
+      promise.abort();
       dispatch(cleanUpWishlist())
     };
 },[dispatch])
@@ -23,6 +24,7 @@ useLayoutEffect(()=>{
   const records = productsFullInfo.map((el) => ({
     ...el,
     isLiked: true,
+    isAuthenticated:true
   }));
 
   return {loading,error,records}

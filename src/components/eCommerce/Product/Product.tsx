@@ -1,4 +1,4 @@
-import { Button,Spinner } from "react-bootstrap";
+import { Button,Modal,Spinner } from "react-bootstrap";
 import styles from "./styles.module.css";
 import { TProduct } from "src/Types/product";
 
@@ -11,9 +11,11 @@ import ThunkAddRemoveWishlist from "@store/Wishlist/Thunk/ThunkAddRemoveWishlist
 const { product, productImg,maximumNotice,like_button } = styles;
 
 
-const Product = memo(({id,title,price,img,max,quantity,isLiked}:TProduct) => {
+const Product = memo(({id,title,price,img,max,quantity,isLiked,isAuthenticated}:TProduct) => {
 const [isBtnDisabled, setIsBtnDisabled]=useState(false);
 const [isLoading,setIsloading] = useState(false);
+const[showModal,setShowModal]=useState(false);
+
 const dispatch = useAppDispatch();
 
   const currentRemainingQuantity = max - (quantity ?? 0);
@@ -29,8 +31,6 @@ useEffect(()=>{
     
   },300)
 
-
-
   return ()=>  {
     clearTimeout(debounce)
   }
@@ -42,18 +42,33 @@ const addToCartHandler =()=>{
   setIsBtnDisabled(true);
 }
 const addTowishListHandler =()=>{
-  if (isLoading) return;
-  setIsloading(true);
 
-  dispatch(ThunkAddRemoveWishlist(id)).unwrap()
- .finally(() => {
-      setIsloading(false);
+  if(isAuthenticated){
+    if (isLoading) return;
+    setIsloading(true);
+
+    dispatch(ThunkAddRemoveWishlist(id)).unwrap()
+    .finally(() => {
+          setIsloading(false);
     });
-  
+  }else{
+    setShowModal(true);
+  }
 }
-
   return (
     <div className={product}>
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Login Required</Modal.Title>
+          </Modal.Header>
+
+          <Modal.Body>
+            <p>You have to login first to add this item to your wishlist.</p>
+          </Modal.Body>
+
+      </Modal>
+     
+
       <div className={like_button} onClick={addTowishListHandler}>
         {isLoading ? (<Spinner animation="border" size="sm" variant="primary" />) :
         (isLiked ? <Like_fill /> : <Like  style={{ fill: "#999" }}/>)

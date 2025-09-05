@@ -9,7 +9,8 @@ function useProducts() {
     const dispatch = useAppDispatch();
     const {loading, error, records }=useAppSelector((state)=>state.ProductsSlice);
       const cartItems = useAppSelector((state) => state.cartSlice.items);
-      const itemsIdOfWishList = useAppSelector(state => state.wishlistSlice.itemsId)
+      const itemsIdOfWishList = useAppSelector(state => state.wishlistSlice.itemsId);
+      const  userAccessToken= useAppSelector(state => state.AuthSlice.jwt)
         const productPrefix = params.prefix;
 
 
@@ -25,6 +26,7 @@ function useProducts() {
         ...el,
         isLiked:itemsIdOfWishList.includes(el.id),
         quantity: cartItems[el.id] || 0,
+        isAuthenticated:userAccessToken ? true:false
       }));
 
   return {loading,error,productsFullInfo,productPrefix};

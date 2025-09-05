@@ -30,11 +30,9 @@ const wishlistSlice = createSlice({
     },
     extraReducers:(builder)=>{
             builder.addCase(ThunkAddRemoveWishlist.pending,(state)=>{
-                state.loading ="pending";
                 state.error =null;
             });
             builder.addCase(ThunkAddRemoveWishlist.fulfilled,(state,action)=>{
-                state.loading ="succeeded";
                 if(action.payload?.type === "add"){
                     
                     state.itemsId.push(action.payload.id);
@@ -47,7 +45,6 @@ const wishlistSlice = createSlice({
                 }
             });
             builder.addCase(ThunkAddRemoveWishlist.rejected,(state,action)=>{
-                state.loading="failed";
                 if (action.payload && typeof action.payload === "string") {
                     state.error = action.payload;
                 }

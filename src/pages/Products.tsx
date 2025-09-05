@@ -7,7 +7,7 @@ import useProducts from "@hooks/useProducts";
 
 const Products = () => {
      const {loading,error,productsFullInfo} = useProducts();
-
+      
   return (
     <Container>
       <Heading title='Products' /> 

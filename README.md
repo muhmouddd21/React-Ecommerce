@@ -9,7 +9,9 @@ using more Redux toolkit,React hook form
 ## 🚀 Features
    
 - Created a great structure of project
+- used Typescipt aliases
 - AddToCart and AddTowishlist using redux asyncThunk synchronized with backend DB
+- added modal for non logged users to tell em to log in
 - Using axios handling errors
 - cancel request if the user entered another page before the current page loading
 - Created LazyLoading
