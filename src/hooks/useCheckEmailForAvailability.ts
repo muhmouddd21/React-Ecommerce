@@ -1,5 +1,5 @@
+import api from "@services/axios-global";
 import axiosErrorHandle from "@utils/axiosErrorHandle";
-import axios from "axios"
 import { useState } from "react"
 
 type TStatus = "idle" | "checking" | "available" | "notAvailable" | "failed";
@@ -13,7 +13,7 @@ function useCheckEmailForAvailability() {
         setEmailAvailabilityStatus("checking");
 
         try {
-            const response =await axios.get(`/users?email=${email}`);
+            const response =await api.get(`/users?email=${email}`);
             console.log(response.data.length);
             
             if(response.data.length === 0){
