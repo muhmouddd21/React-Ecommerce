@@ -15,6 +15,7 @@ using more Redux toolkit,React hook form
 - Created LazyLoading
 - created skeleton for improving UX
 - Created protected routes using high order component
+- created asyncThunk to get a new access token if a user refreshes the page
 - After logging out of a user wishlist reset to zero
 - optimized the app by removing global state after leaving a certein page contains that state
 - lottie Animation during navigating,lazy loading, cart Empty,wishlist Empty for improving UX
