@@ -40,8 +40,7 @@ const AuthSlice =createSlice({
             state.user =null;
         },
         setAccessToken:(state,action)=>{
-            console.log(action.payload);
-            
+      
             state.jwt=action.payload.token;
         }
     },

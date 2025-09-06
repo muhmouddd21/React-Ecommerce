@@ -26,21 +26,42 @@ const requestInterceptor = (config:InternalAxiosRequestConfig) => {
 const responseInterceptor = async (error: AxiosError) => {
   const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
 
-  if (error.response?.status === 401 && !originalRequest._retry) {
-    originalRequest._retry = true;
+  // --- START OF THE FIX ---
+  // Check if the error is a 401, if we haven't retried yet, AND if the failed request was NOT the refresh endpoint itself.
+  if (error.response?.status === 401 && !originalRequest._retry && originalRequest.url !== "/users/fresh") {
+  // --- END OF THE FIX ---
+    
+    originalRequest._retry = true; // Mark that we are attempting a retry
+    
     try {
+      console.log("Access token expired. Attempting to refresh...");
       const refreshResponse = await api.post("/users/fresh");
-      const { accessToken: newAccessToken } = refreshResponse.data;
+      
+      // Assuming your backend returns { accessToken: '...' }
+      // In your Thunk, you used response.data, but here you might need to access the property directly
+      const newAccessToken = refreshResponse.data.accessToken; 
+
+      // Dispatch the action to update the token in Redux
+      // Using imported actions is safer than string literals
 
       store.dispatch({ type: "AuthSlice/setAccessToken", payload: newAccessToken });
+      // Update the authorization header of the original request
+      if(originalRequest.headers){
+         originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
+      }
 
-      originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
+      // Retry the original request with the new token
       return api(originalRequest);
+
     } catch (refreshError) {
+      console.error("Unable to refresh token. Logging out.");
+      // If the refresh fails, dispatch the logout action
       store.dispatch({ type: "AuthSlice/logOut" });
       return Promise.reject(refreshError);
     }
   }
+
+  // If the error is not a 401, or if it's the refresh endpoint failing, just reject.
   return Promise.reject(error);
 };
 

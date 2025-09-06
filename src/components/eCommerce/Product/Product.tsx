@@ -8,7 +8,8 @@ import { useAppDispatch } from "@store/hooks";
 import { addToCart } from "@store/Cart/CartSlice";
 import { memo, useEffect, useState } from "react";
 import ThunkAddRemoveWishlist from "@store/Wishlist/Thunk/ThunkAddRemoveWishlist";
-const { product, productImg,maximumNotice,like_button } = styles;
+import ProductInfo from "../ProductInfo/ProductInfo";
+const {  maximumNotice,like_button } = styles;
 
 
 const Product = memo(({id,title,price,img,max,quantity,isLiked,isAuthenticated}:TProduct) => {
@@ -56,7 +57,7 @@ const addTowishListHandler =()=>{
   }
 }
   return (
-    <div className={product}>
+    <ProductInfo img={img} title={title} price={price}>
       <Modal show={showModal} onHide={() => setShowModal(false)}>
           <Modal.Header closeButton>
             <Modal.Title>Login Required</Modal.Title>
@@ -74,16 +75,10 @@ const addTowishListHandler =()=>{
         (isLiked ? <Like_fill /> : <Like  style={{ fill: "#999" }}/>)
       }
         
-         
+      
       </div>
-      <div className={productImg}>
-        <img
-          src={img}
-          alt={title}
-        />
-      </div>
-      <h2>{title}</h2>
-      <h3>{price.toFixed(2)} EGP</h3>
+
+
       <p className={maximumNotice}>
         {quantityReachedToMax
           ? "You reach to the limit"
@@ -102,7 +97,7 @@ const addTowishListHandler =()=>{
           "Add to cart"
         )}
       </Button>
-    </div>
+    </ProductInfo>
   );
 });
 
