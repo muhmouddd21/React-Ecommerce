@@ -4,6 +4,7 @@ import  ProductsSlice  from '@store/Products/ProductsSlice'
 import wishlistSlice from '@store/Wishlist/wishlistSlice'
 import cartSlice from '@store/Cart/CartSlice'
 import AuthSlice from '@store/Auth/authSlice'
+import OrderSlice from '@store/Order/OrderSlice'
 import { persistStore, persistReducer, FLUSH,
   REHYDRATE,
   PAUSE,
@@ -42,6 +43,7 @@ const rootReducers =combineReducers(
   {
     categoriesSlice,
     ProductsSlice,
+    OrderSlice,
     AuthSlice:persistReducer(authPersistConfig,AuthSlice),
     wishlistSlice:persistReducer(wishListPersistConfig, wishlistSlice),
     cartSlice:persistReducer(cartPersistConfig, cartSlice)
