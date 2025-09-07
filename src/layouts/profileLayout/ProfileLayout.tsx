@@ -4,8 +4,8 @@ import { NavLink, Outlet } from "react-router-dom"
 
 const ProfileLayout = () => {
   return (
-    <Row>
-        <Col md={3}>
+    <Row  style={{ minHeight: "100vh" }}>
+        <Col md={3} >
         <ListGroup>
         <ListGroupItem   as={NavLink} to={""} end>Profile</ListGroupItem>
         <ListGroupItem as={NavLink} to={"orders"}>Orders</ListGroupItem>
