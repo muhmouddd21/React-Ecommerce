@@ -19,8 +19,11 @@ const ProductInfo = ({direction="row",img,title,price,children,style}:ProductInf
           alt={title}
         />
       </div>
+      <div className={`${styles[`productInfo-${direction}`]}`}>
       <h2>{title}</h2>
       <h3>{price.toFixed(2)} EGP</h3>
+      </div>
+      
       {children}
     </div>
   )
