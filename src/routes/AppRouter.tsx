@@ -17,6 +17,8 @@ import ProtectedRoute from '@components/common/protectedRoute/ProtectedRoute';
 import Profile from '@pages/Profile';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import ThunkCheckAuth from '@store/Auth/Thunk/ThunkCheckAuth';
+import ProfileLayout from '@layouts/profileLayout/ProfileLayout';
+import Orders from '@pages/Orders';
 
 
 const router = createBrowserRouter([
@@ -88,8 +90,19 @@ const router = createBrowserRouter([
                     path:'profile',
                     element:
                     <ProtectedRoute>
-                        <PageSuspenseFallback> <Profile/> </PageSuspenseFallback> 
+                        <PageSuspenseFallback> <ProfileLayout/> </PageSuspenseFallback> 
                     </ProtectedRoute>
+                    ,
+                    children:[
+                        {
+                            index:true,
+                            element: <PageSuspenseFallback> <Profile /></PageSuspenseFallback>
+                        },
+                        {
+                            path:"orders",
+                            element: <PageSuspenseFallback> <Orders /></PageSuspenseFallback>
+                        }
+                    ]
                 }
 
     ]

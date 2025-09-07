@@ -54,8 +54,8 @@ export default function NavBar({ leftLinks = [], rightLinks = [] }:NavBarProps )
                 (
                   <Nav>
                 <NavDropdown  title={`Welcome: ${user?.firstName} ${user?.lastName}`}   id="basic-nav-dropdown">
-                    <NavDropdown.Item as={NavLink} to={'profile'}>profile</NavDropdown.Item>
-                    <NavDropdown.Item >orders</NavDropdown.Item>
+                    <NavDropdown.Item as={NavLink} to={'profile'} end>profile</NavDropdown.Item>
+                    <NavDropdown.Item as={NavLink} to={'profile/orders'}>orders</NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item 
   
