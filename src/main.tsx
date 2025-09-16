@@ -12,11 +12,17 @@ import "./services/axios-global.js"
 import { Provider } from 'react-redux';
 import  {store,persistor}  from '@store/index';
 import { PersistGate } from "redux-persist/integration/react";
-
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+const queryClient = new QueryClient();
 createRoot(document.getElementById('root')!).render(
+   
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-        <AppRouter />
+        <QueryClientProvider client={queryClient}>
+            <AppRouter />
+            <ReactQueryDevtools />
+        </QueryClientProvider>
         </PersistGate>
     </Provider>
 )

@@ -11,6 +11,7 @@ const Header = () => {
     { label: "Home", to: "/" },
     { label: "Categories", to: "/categories" },
     { label: "About", to: "/about-us" },
+    {label :"user", to :"/dashboard"}
   ];
 
   const rightLinks = [

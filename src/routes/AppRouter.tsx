@@ -19,6 +19,8 @@ import { useAppDispatch, useAppSelector } from '@store/hooks';
 import ThunkCheckAuth from '@store/Auth/Thunk/ThunkCheckAuth';
 import ProfileLayout from '@layouts/profileLayout/ProfileLayout';
 import Orders from '@pages/Orders';
+import Dashboard from '@pages/Dashboard';
+import TodoDetailPage from '@pages/TodoDetailPage';
 
 
 const router = createBrowserRouter([
@@ -77,6 +79,15 @@ const router = createBrowserRouter([
                         <PageSuspenseFallback> <Wishlist/> </PageSuspenseFallback> 
                     </ProtectedRoute>
 
+                },
+                {
+                    path:"dashboard",
+                    element: <PageSuspenseFallback> <Dashboard /> </PageSuspenseFallback>
+                },
+                {
+
+                    path: "/todos", 
+                    element: <TodoDetailPage />,
                 },
                 {
                     path:'login',

@@ -9,7 +9,7 @@ export const setStore = (s: AppStore) => {
 };
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000/v1',
+  baseURL: 'https://ecommerce-back-production-ab31.up.railway.app/v1',
   withCredentials: true,
 });
 
