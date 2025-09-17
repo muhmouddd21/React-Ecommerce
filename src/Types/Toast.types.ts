@@ -3,5 +3,4 @@ export type TToast = {
   type: "primary" | "success" | "warning" | "danger";
   title?: string | null;
   message: string;
-  delayApperance?: boolean;
 };

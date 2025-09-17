@@ -12,6 +12,12 @@ const initialState: IToastState = {
         message:"added to cart",
         type:"danger",
         title:"home"
+    },
+      {
+        id:"11",
+        message:"added to cart",
+        type:"primary",
+        title:"home"
     }
   ],
 };
@@ -24,11 +30,11 @@ const ToastSlice = createSlice({
             state.records = state.records.filter((el) => el.id !== action.payload);
         },
         addToast: (state, action: PayloadAction<TToast>) => {
-        state.records.push({
-        id: nanoid(),
-        title: action.payload.title || action.payload.type,
-        type: action.payload.type,
-        message: action.payload.message,
+          state.records.push({
+          id: nanoid(),
+          title: action.payload.title || action.payload.type,
+          type: action.payload.type,
+          message: action.payload.message,
       });
     },
     }

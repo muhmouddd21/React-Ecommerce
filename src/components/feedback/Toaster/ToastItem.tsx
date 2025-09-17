@@ -3,12 +3,14 @@ import { TToast } from "src/Types/Toast.types"
 import styles from "./styles.module.css"
 import { useDispatch } from "react-redux"
 import { removeToast } from "@store/Toast/ToastSlice"
+
 import { useCallback, useEffect, useState } from "react"
 const {toastItem} = styles
 
 const ToastItem = ({id,type,title,message}:TToast) => {
     const dispatch =useDispatch()
     const [progressIndicator,setProgressIndicator]=useState(0);
+    const [isHovered, setIsHovered] = useState(false);
     const progressBar=100;
     const duration =4000;
     const intervalTime =duration/100;
@@ -21,19 +23,19 @@ const ToastItem = ({id,type,title,message}:TToast) => {
     }, [id, dispatch]);
 
 
-    useEffect(()=>{
-        const timerId =setInterval(()=>{
-            setProgressIndicator((prev) =>{
-                if(prev < progressBar){
-                    return prev +1;
-                }
-                return prev;
-            } )
-        })
-        return ()=>{
-            clearInterval(timerId);
+    useEffect(() => {
+        let timerId =0;
+        if (!isHovered && progressIndicator < progressBar) {
+            timerId = setInterval(() => {
+                setProgressIndicator((prev) => prev + 1);
+            }, intervalTime);
         }
-    },[intervalTime])
+
+        // Clean up the timer on component unmount or state change
+        return () => {
+            clearInterval(timerId);
+        };
+    }, [isHovered, progressIndicator, progressBar, intervalTime]);
 
       //close toast when progress bar is completed
     useEffect(() => {
@@ -42,8 +44,13 @@ const ToastItem = ({id,type,title,message}:TToast) => {
         }
     }, [progressIndicator, closeToastHandler]);
 
+
+
   return (
-        <div className={`alert alert-${type} ${toastItem}`}>
+        <div className={`alert alert-${type} ${toastItem}`}
+             onMouseEnter={() => setIsHovered(true)} 
+            onMouseLeave={() => setIsHovered(false)}
+        >
             <h5>{title}</h5>
             <p>{message}</p>
             <button type="button" className="btn-close"  onClick={closeToastHandler} />
